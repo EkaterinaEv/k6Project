@@ -5,5 +5,4 @@ node_modules/
 .DB_Store
 otus.js
 *.log
-*.csv
 *.gz
