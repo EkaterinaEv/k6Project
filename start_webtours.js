@@ -58,6 +58,16 @@ export const options = {
 };
 
 export default function () {
+  // Проверка наличия данных
+  if (!users || users.length === 0) {
+    console.error('Ошибка: Файл users.csv не найден или пуст');
+    return;
+  }
+  if (!passengers || passengers.length === 0) {
+    console.error('Ошибка: Файл passengers.csv не найден или пуст');
+    return;
+  }
+
   // Получаем пользователя и пассажира из CSV
   const user = users[0];
   const passenger = passengers[0];
@@ -69,18 +79,11 @@ export default function () {
     'status code main is 200': (r) => r.status === 200,
     'title is Web Tours': (r) => r.html('title').text() === 'Web Tours',
   });
-  sleep(Math.random() * 2 + 1); // pause 1-3 seconds
+  sleep(Math.random() * 2 + 1);
 
   // 2. Create Session
   console.log('2. Создание сессии');
   const sessionResp = http.get(`${BASE_URL}/cgi-bin/welcome.pl?signOff=true`);
-  let msoCookie = '';
-  if (sessionResp.headers['Set-Cookie']) {
-    const match = sessionResp.headers['Set-Cookie'].match(/MSO=([^;]+)/);
-    if (match) {
-      msoCookie = match[1];
-    }
-  }
   check(sessionResp, {
     'status code session is 200': (r) => r.status === 200,
   });
@@ -166,6 +169,9 @@ export default function () {
   let outboundFlight = '';
   if (flightsList.length > 0) {
     outboundFlight = flightsList[Math.floor(Math.random() * flightsList.length)];
+  } else {
+    console.warn('Предупреждение: Рейсы не найдены, используется заглушка');
+    outboundFlight = 'dummy-flight';
   }
 
   check(findFlightResp, {
