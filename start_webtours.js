@@ -232,5 +232,5 @@ export default function () {
     'title is Web Tours': (r) => r.html('title').text() === 'Web Tours',
   });
 
-  console.log('✅ Тест успешно завершен!');
+  console.log('Тест успешно завершен!');
 }
