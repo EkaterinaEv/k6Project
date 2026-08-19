@@ -57,7 +57,7 @@ export function yaScenario() {
 
 // Сценарий для www.ru
 export function wwwScenario() {
-  const response = http.get('http://www.ru/'); // ← ИЗМЕНЕНО на http://
+  const response = http.get('http://www.ru/');
 
   check(response, {
     'www.ru status is 200': (r) => r.status === 200,
